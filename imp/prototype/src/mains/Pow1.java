@@ -20,7 +20,7 @@ public class Pow1 {
 	private static Program program() {
 		Program p = new Program();
 		Procedure main = new Procedure("main");
-		Call powCall = new Call("pow");
+		Call powCall = new Call("x","pow");
 		powCall.addArgument(new Const(5));
 		powCall.addArgument(new Const(3));
 		main.setBody(powCall);
@@ -31,12 +31,12 @@ public class Pow1 {
 		pow.addParameter("exp");
 		Seq powBody = new Seq();
 		pow.setBody(powBody);
-		powBody.addStatement(new Assign("result",new Const(0)));
+		powBody.addStatement(new Assign("result",new Const(1)));
 		Seq powLoopBody = new Seq();
 		powBody.addStatement(new While(new Greater(new Var("exp"),new Const(0)),powLoopBody));
-		powLoopBody.addStatement(new Print("exp = ",new Var("exp")));
 		powLoopBody.addStatement(new Assign("result",new Mul(new Var("result"),new Var("base"))));
 		powLoopBody.addStatement(new Assign("exp",new Add(new Var("exp"),new Const(-1))));
+		powBody.addStatement(new Assign("pow",new Var("result")));
 		return p;
 	}
 	

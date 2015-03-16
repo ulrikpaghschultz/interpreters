@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import run.Env;
+import run.Value;
 
 public class Call extends Statement {
 	private String name;
 	private List<Exp> arguments = new ArrayList<Exp>();
+	private String lhs;
 	
-	public Call(String _name) {
-		name = _name;
+	public Call(String _lhs, String _name) {
+		lhs = _lhs; name = _name;
 	}
 
 	@Override
@@ -24,6 +26,9 @@ public class Call extends Statement {
 			i++;
 		}
 		proc.getBody().eval(prog,env2);
+		Value maybe = env2.lookup(name);
+		if(maybe==null) maybe = new Value(0);
+		env.bind(lhs, maybe);
 	}
 
 	public void addArgument(Exp exp) {
